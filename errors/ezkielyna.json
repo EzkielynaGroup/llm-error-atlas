@@ -1,0 +1,161 @@
+{
+  "provider": "ezkielyna",
+  "name": "Ezkielyna API",
+  "source": "https://ezkielyna.store/error",
+  "entries": [
+    {
+      "id": "ezkielyna-401-invalid-api-key",
+      "layer": "gateway",
+      "status": 401,
+      "match": {
+        "message": [
+          "api key rejected: it is wrong, expired, disabled, or out of credit"
+        ]
+      },
+      "title": {
+        "en": "401 API key rejected: it is wrong, expired, disabled, or out of credit",
+        "id": "401 API key ditolak: salah, kedaluwarsa, nonaktif, atau saldo habis"
+      },
+      "cause": {
+        "en": "The key is wrong, expired, disabled, or its quota is used up (status Exhausted in the API Keys menu). Ezkielyna keys only work on api.ezkielyna.store.",
+        "id": "Key salah, kedaluwarsa, nonaktif, atau kuotanya habis (status Exhausted di menu API Keys). Key Ezkielyna hanya berlaku di api.ezkielyna.store."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Send it as `Authorization: Bearer sk-...` and check the key's status on the API Keys page. Claude Code uses `ANTHROPIC_BASE_URL` without `/v1` plus `ANTHROPIC_AUTH_TOKEN`.",
+        "id": "Kirim sebagai `Authorization: Bearer sk-...` dan cek status key di halaman API Keys. Claude Code memakai `ANTHROPIC_BASE_URL` tanpa `/v1` dan `ANTHROPIC_AUTH_TOKEN`."
+      },
+      "operator_fix": {
+        "en": "Not applicable: this is the gateway's own answer to a client-side key problem.",
+        "id": "Tidak berlaku: ini jawaban gateway untuk masalah key di sisi klien."
+      },
+      "docs": "https://ezkielyna.store/error/invalid-api-key",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "ezkielyna-404-wrong-base-url",
+      "layer": "gateway",
+      "status": 404,
+      "match": {
+        "code": [
+          "wrong_base_url"
+        ],
+        "message": [
+          "wrong base url"
+        ]
+      },
+      "title": {
+        "en": "404 wrong_base_url",
+        "id": "404 wrong_base_url (base URL salah)"
+      },
+      "cause": {
+        "en": "The request went to the store website or to a path without `/v1`, not to the API host.",
+        "id": "Request dikirim ke alamat toko atau ke path tanpa `/v1`, bukan ke host API."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Use `https://api.ezkielyna.store/v1` for OpenAI-format clients and `https://api.ezkielyna.store` (no `/v1`) for Anthropic-format clients. The same key works.",
+        "id": "Pakai `https://api.ezkielyna.store/v1` untuk klien format OpenAI dan `https://api.ezkielyna.store` (tanpa `/v1`) untuk klien format Anthropic. Key yang sama tetap berlaku."
+      },
+      "operator_fix": {
+        "en": "Not applicable.",
+        "id": "Tidak berlaku."
+      },
+      "docs": "https://ezkielyna.store/error/model-not-found",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "ezkielyna-503-model-not-in-key-group",
+      "layer": "gateway",
+      "status": 503,
+      "match": {
+        "message": [
+          "is not available for your \\w+ key group"
+        ]
+      },
+      "title": {
+        "en": "503 Model is not available for your key group",
+        "id": "503 Model tidak tersedia untuk grup key-mu"
+      },
+      "cause": {
+        "en": "The key's group does not include this model (for example a Standard key calling a Claude model), or all of its routes are busy.",
+        "id": "Grup key tidak mencakup model ini (misalnya key Standard memanggil model Claude), atau semua rutenya sedang sibuk."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Create a key in the Auto group or in a group that lists the model; check the model's group on its model page.",
+        "id": "Buat key di grup Auto atau grup yang mencantumkan model itu; cek grup model di halaman modelnya."
+      },
+      "operator_fix": {
+        "en": "Not applicable.",
+        "id": "Tidak berlaku."
+      },
+      "docs": "https://ezkielyna.store/error/model-not-found",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "ezkielyna-403-insufficient-quota",
+      "layer": "gateway",
+      "status": 403,
+      "requires_hint": true,
+      "match": {
+        "message": [
+          "token quota is not enough"
+        ]
+      },
+      "title": {
+        "en": "403 Insufficient quota (token quota is not enough)",
+        "id": "403 Saldo habis (token quota is not enough)"
+      },
+      "cause": {
+        "en": "The Wallet balance is empty or the key's own quota limit was reached.",
+        "id": "Saldo Wallet kosong atau batas kuota key sudah tercapai."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Top up API Credit and redeem it in Wallet, or raise the key quota in API Keys. Retrying does not help.",
+        "id": "Isi API Credit lalu tukarkan di Wallet, atau naikkan kuota key di API Keys. Retry tidak membantu."
+      },
+      "operator_fix": {
+        "en": "Not applicable.",
+        "id": "Tidak berlaku."
+      },
+      "docs": "https://ezkielyna.store/error/insufficient-quota",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "ezkielyna-429-upstream-capacity",
+      "layer": "gateway",
+      "status": 429,
+      "match": {
+        "message": [
+          "upstream rate or capacity limit reached"
+        ]
+      },
+      "title": {
+        "en": "429 Upstream rate or capacity limit reached",
+        "id": "429 Batas rate atau kapasitas upstream tercapai"
+      },
+      "cause": {
+        "en": "The model provider behind the gateway is busy. A 429 also appears above 300 requests per minute or 50 parallel requests from one IP.",
+        "id": "Penyedia model di belakang gateway sedang sibuk. 429 juga muncul di atas 300 request per menit atau 50 request paralel dari satu IP."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Wait for `Retry-After`, lower concurrency and retry shortly, or try another model from the status page.",
+        "id": "Tunggu sesuai `Retry-After`, kurangi paralel lalu ulangi sebentar lagi, atau coba model lain dari halaman status."
+      },
+      "operator_fix": {
+        "en": "Not applicable.",
+        "id": "Tidak berlaku."
+      },
+      "docs": "https://ezkielyna.store/error/429-rate-limit",
+      "last_verified": "2026-11-12",
+      "verified": true
+    }
+  ]
+}

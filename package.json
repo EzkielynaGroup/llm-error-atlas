@@ -1,0 +1,71 @@
+{
+  "name": "llm-error-atlas",
+  "version": "0.1.0",
+  "description": "Paste an LLM API error, get the cause, whether to retry, and the fix. Open dataset (CC BY 4.0) + zero-dependency library + CLI.",
+  "type": "module",
+  "main": "./lib/index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./lib/index.cjs"
+    },
+    "./engine": "./lib/engine.cjs",
+    "./errors/*": "./errors/*",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "llm-error-atlas": "bin/cli.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "index.d.ts",
+    "lib/",
+    "bin/",
+    "errors/",
+    "schema/",
+    "README.md",
+    "LICENSE",
+    "DATA-LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "build:site": "node scripts/build-site.mjs",
+    "check:links": "node scripts/check-links.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "llm",
+    "error",
+    "error-codes",
+    "openai",
+    "anthropic",
+    "gemini",
+    "deepseek",
+    "mistral",
+    "groq",
+    "openrouter",
+    "litellm",
+    "ollama",
+    "retry",
+    "rate-limit",
+    "429",
+    "api-errors",
+    "dataset"
+  ],
+  "author": "Ezekiel Lieberhart (Ezkielyna)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EzkielynaGroup/llm-error-atlas.git"
+  },
+  "homepage": "https://github.com/EzkielynaGroup/llm-error-atlas",
+  "bugs": {
+    "url": "https://github.com/EzkielynaGroup/llm-error-atlas/issues"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "provider": "mistral",
+  "name": "Mistral AI",
+  "source": "https://docs.mistral.ai/resources/error-glossary",
+  "entries": [
+    {
+      "id": "mistral-402-payment-required",
+      "layer": "provider",
+      "status": 402,
+      "match": {},
+      "title": { "en": "402 Payment required", "id": "402 Payment required (masalah tagihan)" },
+      "cause": {
+        "en": "A billing condition blocks the request: prepaid credits at zero, an organization or workspace monthly spending limit reached, included usage used up without pay-as-you-go, or a failed invoice payment.",
+        "id": "Kondisi tagihan memblokir request: kredit prabayar nol, batas belanja bulanan organisasi atau workspace tercapai, kuota bawaan habis tanpa pay-as-you-go, atau pembayaran tagihan gagal."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Follow the link in the error message to add credits, update the payment method, or change the spending limit.",
+        "id": "Ikuti tautan di pesan error untuk menambah kredit, memperbarui metode pembayaran, atau mengubah batas belanja."
+      },
+      "operator_fix": {
+        "en": "Fix billing in the admin panel, then resume traffic. Do not retry automatically.",
+        "id": "Perbaiki tagihan di panel admin, lalu jalankan lagi trafik. Jangan retry otomatis."
+      },
+      "docs": "https://docs.mistral.ai/resources/error-glossary",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "mistral-403-forbidden",
+      "layer": "provider",
+      "status": 403,
+      "match": {},
+      "title": { "en": "403 Forbidden", "id": "403 Forbidden (tidak punya akses)" },
+      "cause": {
+        "en": "The account cannot access the resource: the model is not on your subscription tier, you tried to delete a base model, or workspace permissions block it.",
+        "id": "Akun tidak bisa mengakses resource: model tidak termasuk tier langgananmu, kamu mencoba menghapus model dasar, atau izin workspace memblokirnya."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check your subscription tier and model access, or ask the workspace admin.",
+        "id": "Cek tier langganan dan akses model, atau tanyakan ke admin workspace."
+      },
+      "operator_fix": {
+        "en": "Grant the workspace access to the model or upgrade the tier.",
+        "id": "Beri workspace akses ke model atau naikkan tier."
+      },
+      "docs": "https://docs.mistral.ai/resources/error-glossary",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "mistral-404-not-found",
+      "layer": "provider",
+      "status": 404,
+      "match": { "code": ["unknown_model"] },
+      "title": { "en": "404 Not found / unknown_model", "id": "404 Not found / unknown_model (tidak ditemukan)" },
+      "cause": {
+        "en": "The resource does not exist: an invalid model ID or endpoint path, a deleted file, job or conversation, or a typo in the URL.",
+        "id": "Resource tidak ada: ID model atau path endpoint salah, file, job, atau percakapan sudah dihapus, atau salah ketik di URL."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the model ID and endpoint path; use the list endpoints to confirm the resource exists.",
+        "id": "Cek ID model dan path endpoint; pakai endpoint list untuk memastikan resource ada."
+      },
+      "operator_fix": {
+        "en": "Keep model IDs in configuration and update them when models are retired.",
+        "id": "Simpan ID model di konfigurasi dan perbarui saat model dipensiunkan."
+      },
+      "docs": "https://docs.mistral.ai/resources/error-glossary",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "mistral-422-validation-error",
+      "layer": "provider",
+      "status": 422,
+      "match": {},
+      "title": { "en": "422 Validation error", "id": "422 Validation error (nilai parameter salah)" },
+      "cause": {
+        "en": "The JSON is well formed but a value is invalid: wrong data type, an enum value outside the allowed set, or an array that is too long.",
+        "id": "JSON-nya benar tapi ada nilai yang tidak valid: tipe data salah, nilai enum di luar pilihan, atau array terlalu panjang."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Read the field-level details in the response body and compare with the API schema.",
+        "id": "Baca detail per field di body respons dan bandingkan dengan skema API."
+      },
+      "operator_fix": {
+        "en": "Validate request bodies against the schema before sending.",
+        "id": "Validasi body request terhadap skema sebelum mengirim."
+      },
+      "docs": "https://docs.mistral.ai/resources/error-glossary",
+      "last_verified": "2026-11-12",
+      "verified": true
+    }
+  ]
+}

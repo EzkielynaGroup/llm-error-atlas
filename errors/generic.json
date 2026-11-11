@@ -1,0 +1,382 @@
+{
+  "provider": "generic",
+  "name": "Generic HTTP / network",
+  "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status",
+  "fallback": true,
+  "entries": [
+    {
+      "id": "http-400",
+      "layer": "http",
+      "status": 400,
+      "match": {},
+      "title": {
+        "en": "HTTP 400 Bad Request",
+        "id": "HTTP 400 Permintaan tidak valid"
+      },
+      "cause": {
+        "en": "The server could not accept the request as sent: invalid JSON, a missing or wrongly typed field, an unsupported parameter, or input that is too long for the model.",
+        "id": "Server tidak bisa menerima request seperti yang dikirim: JSON tidak valid, field wajib hilang atau tipenya salah, parameter tidak didukung, atau input terlalu panjang untuk model."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Read the error message: it usually names the field. Fix the request; sending it again unchanged will fail again.",
+        "id": "Baca pesan error: biasanya menyebut field-nya. Perbaiki request; mengirim ulang tanpa perubahan akan gagal lagi."
+      },
+      "operator_fix": {
+        "en": "Validate bodies before sending and log the full error message for this status.",
+        "id": "Validasi body sebelum mengirim dan catat pesan error lengkap untuk status ini."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/400",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "http-401",
+      "layer": "http",
+      "status": 401,
+      "match": {},
+      "title": {
+        "en": "HTTP 401 Unauthorized",
+        "id": "HTTP 401 Tidak terautentikasi"
+      },
+      "cause": {
+        "en": "The API key or token is missing, wrong, expired or revoked, or it was sent to a different service than the one that issued it.",
+        "id": "API key atau token tidak dikirim, salah, kedaluwarsa, atau dicabut, atau dikirim ke layanan lain yang bukan penerbitnya."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Copy the key again without spaces, check the header format (usually `Authorization: Bearer <key>`), and check that the base URL belongs to the same service as the key.",
+        "id": "Salin ulang key tanpa spasi, cek format header (biasanya `Authorization: Bearer <key>`), dan pastikan base URL milik layanan yang sama dengan key."
+      },
+      "operator_fix": {
+        "en": "Rotate the key in your secret store and redeploy.",
+        "id": "Ganti key di penyimpanan rahasia lalu deploy ulang."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/401",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "http-402",
+      "layer": "http",
+      "status": 402,
+      "match": {},
+      "title": {
+        "en": "HTTP 402 Payment Required",
+        "id": "HTTP 402 Perlu pembayaran"
+      },
+      "cause": {
+        "en": "Many LLM APIs use 402 for an empty balance, used-up credits or a billing problem.",
+        "id": "Banyak API LLM memakai 402 untuk saldo kosong, kredit habis, atau masalah tagihan."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Top up or fix billing for the account behind the key. Retrying does not help until then.",
+        "id": "Isi saldo atau perbaiki tagihan akun pemilik key. Retry tidak membantu sebelum itu."
+      },
+      "operator_fix": {
+        "en": "Alert on low balance and keep 402 out of retry loops.",
+        "id": "Pasang peringatan saldo rendah dan jangan masukkan 402 ke loop retry."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/402",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "http-403",
+      "layer": "http",
+      "status": 403,
+      "match": {},
+      "title": {
+        "en": "HTTP 403 Forbidden",
+        "id": "HTTP 403 Dilarang / tidak punya izin"
+      },
+      "cause": {
+        "en": "The key is valid but not allowed to do this: no access to the model or resource, a restricted project, a region rule, a spend limit, or a content policy block.",
+        "id": "Key valid tapi tidak boleh melakukan ini: tidak punya akses ke model atau resource, proyek dibatasi, aturan wilayah, batas belanja, atau diblokir kebijakan konten."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Read the message for the exact reason; check model access, quota or policy settings for the key.",
+        "id": "Baca pesan untuk alasan pastinya; cek akses model, kuota, atau pengaturan kebijakan key."
+      },
+      "operator_fix": {
+        "en": "Grant the needed access or limit at the account, project or key level.",
+        "id": "Beri akses atau batas yang dibutuhkan di tingkat akun, proyek, atau key."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/403",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "http-404",
+      "layer": "http",
+      "status": 404,
+      "match": {},
+      "title": {
+        "en": "HTTP 404 Not Found",
+        "id": "HTTP 404 Tidak ditemukan"
+      },
+      "cause": {
+        "en": "The model name or the URL path does not exist. A missing or doubled `/v1` in the base URL is a common cause.",
+        "id": "Nama model atau path URL tidak ada. `/v1` yang hilang atau dobel di base URL adalah penyebab yang sering terjadi."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the exact model ID in the provider's model list and the base URL your client expects (with or without `/v1`).",
+        "id": "Cek ID model persis di daftar model penyedia dan base URL yang diharapkan klienmu (dengan atau tanpa `/v1`)."
+      },
+      "operator_fix": {
+        "en": "Log the full request URL to spot path mistakes.",
+        "id": "Catat URL request lengkap untuk menemukan kesalahan path."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/404",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "http-408",
+      "layer": "http",
+      "status": 408,
+      "match": {},
+      "title": {
+        "en": "HTTP 408 Request Timeout",
+        "id": "HTTP 408 Waktu request habis"
+      },
+      "cause": {
+        "en": "The request took too long and was closed before a response was produced.",
+        "id": "Request terlalu lama dan ditutup sebelum ada respons."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry with backoff; use streaming or a smaller request for long generations.",
+        "id": "Ulangi dengan backoff; pakai streaming atau request lebih kecil untuk jawaban panjang."
+      },
+      "operator_fix": {
+        "en": "Align client, proxy and server timeouts.",
+        "id": "Samakan timeout di klien, proxy, dan server."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/408",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "http-413",
+      "layer": "http",
+      "status": 413,
+      "match": {},
+      "title": {
+        "en": "HTTP 413 Content Too Large",
+        "id": "HTTP 413 Request terlalu besar"
+      },
+      "cause": {
+        "en": "The request body is larger than the server accepts: big images, files or a very long history.",
+        "id": "Body request lebih besar dari yang diterima server: gambar atau file besar, atau riwayat yang sangat panjang."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Make the payload smaller: compress or resize images, upload files separately, trim history.",
+        "id": "Perkecil payload: kompres atau perkecil gambar, unggah file terpisah, pangkas riwayat."
+      },
+      "operator_fix": {
+        "en": "Check payload size before sending and raise proxy body limits only if the upstream accepts it.",
+        "id": "Cek ukuran payload sebelum mengirim dan naikkan batas body di proxy hanya kalau upstream menerimanya."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/413",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "http-422",
+      "layer": "http",
+      "status": 422,
+      "match": {},
+      "title": {
+        "en": "HTTP 422 Unprocessable Content",
+        "id": "HTTP 422 Tidak bisa diproses"
+      },
+      "cause": {
+        "en": "The JSON is valid but a value is not acceptable: wrong type, unknown enum value or out-of-range number.",
+        "id": "JSON-nya valid tapi ada nilai yang tidak diterima: tipe salah, nilai enum tidak dikenal, atau angka di luar rentang."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Read the field-level details in the response and fix those values.",
+        "id": "Baca detail per field di respons dan perbaiki nilainya."
+      },
+      "operator_fix": {
+        "en": "Validate against the provider's schema before sending.",
+        "id": "Validasi terhadap skema penyedia sebelum mengirim."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/422",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "http-429",
+      "layer": "http",
+      "status": 429,
+      "match": {},
+      "title": {
+        "en": "HTTP 429 Too Many Requests",
+        "id": "HTTP 429 Terlalu banyak request"
+      },
+      "cause": {
+        "en": "A rate limit (requests, tokens or concurrency) was hit, or the service is busy. Some APIs also use 429 for an empty balance or spend limit; those are not fixed by retrying.",
+        "id": "Batas rate (request, token, atau paralel) tercapai, atau layanan sedang sibuk. Sebagian API juga memakai 429 untuk saldo kosong atau batas belanja; yang itu tidak selesai dengan retry."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Wait for `Retry-After` when the response has it; otherwise use exponential backoff with jitter and a retry cap. Lower concurrency. If the message mentions quota, credit or billing, top up instead.",
+        "id": "Tunggu sesuai `Retry-After` kalau ada di respons; kalau tidak, pakai exponential backoff dengan jitter dan batas retry. Kurangi paralel. Kalau pesannya menyebut quota, credit, atau billing, isi saldo dulu."
+      },
+      "operator_fix": {
+        "en": "Queue or throttle requests on your side and spread load across time, keys you own or models.",
+        "id": "Antrekan atau batasi request di sisimu dan sebarkan beban dari sisi waktu, key milikmu, atau model."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/429",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "http-500",
+      "layer": "http",
+      "status": 500,
+      "match": {},
+      "title": {
+        "en": "HTTP 500 Internal Server Error",
+        "id": "HTTP 500 Error internal server"
+      },
+      "cause": {
+        "en": "Something failed on the server side, not in your request.",
+        "id": "Ada yang gagal di sisi server, bukan di request-mu."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry with backoff a few times; check the provider status page if it continues.",
+        "id": "Ulangi beberapa kali dengan backoff; cek halaman status penyedia kalau berlanjut."
+      },
+      "operator_fix": {
+        "en": "Cap retries and keep the request ID for support.",
+        "id": "Batasi retry dan simpan request ID untuk dukungan."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/500",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "http-502",
+      "layer": "http",
+      "status": 502,
+      "match": {},
+      "title": {
+        "en": "HTTP 502 Bad Gateway",
+        "id": "HTTP 502 Bad Gateway"
+      },
+      "cause": {
+        "en": "A gateway or proxy got an invalid response, or no response, from the server behind it.",
+        "id": "Gateway atau proxy mendapat respons tidak valid, atau tidak ada respons, dari server di belakangnya."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry with backoff; it is usually temporary.",
+        "id": "Ulangi dengan backoff; biasanya sementara."
+      },
+      "operator_fix": {
+        "en": "Check the upstream health and the proxy's upstream timeouts.",
+        "id": "Cek kesehatan upstream dan timeout upstream di proxy."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/502",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "http-503",
+      "layer": "http",
+      "status": 503,
+      "match": {},
+      "title": {
+        "en": "HTTP 503 Service Unavailable",
+        "id": "HTTP 503 Layanan tidak tersedia"
+      },
+      "cause": {
+        "en": "The service or model is overloaded, under maintenance, or has no capacity right now.",
+        "id": "Layanan atau model sedang penuh, dalam perawatan, atau tidak punya kapasitas saat ini."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Wait for `Retry-After` if present, then retry with backoff, or switch to another model.",
+        "id": "Tunggu sesuai `Retry-After` kalau ada, lalu ulangi dengan backoff, atau pindah ke model lain."
+      },
+      "operator_fix": {
+        "en": "Treat 503 like 429 in the retry policy and add a fallback model.",
+        "id": "Perlakukan 503 seperti 429 di aturan retry dan siapkan model cadangan."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/503",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "http-504",
+      "layer": "http",
+      "status": 504,
+      "match": {},
+      "title": {
+        "en": "HTTP 504 Gateway Timeout",
+        "id": "HTTP 504 Gateway Timeout"
+      },
+      "cause": {
+        "en": "A gateway or proxy waited too long for the server behind it. Long generations without streaming often hit this.",
+        "id": "Gateway atau proxy menunggu terlalu lama dari server di belakangnya. Jawaban panjang tanpa streaming sering kena ini."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Use streaming or a smaller `max_tokens`, then retry.",
+        "id": "Pakai streaming atau `max_tokens` lebih kecil, lalu ulangi."
+      },
+      "operator_fix": {
+        "en": "Raise proxy read timeouts for LLM routes and prefer streaming.",
+        "id": "Naikkan read timeout proxy untuk route LLM dan utamakan streaming."
+      },
+      "docs": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/504",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "network-connection-error",
+      "layer": "network",
+      "status": null,
+      "match": {
+        "code": [
+          "ECONNREFUSED",
+          "ECONNRESET",
+          "ETIMEDOUT",
+          "ENOTFOUND"
+        ],
+        "message": [
+          "\\b(econnrefused|econnreset|etimedout|enotfound)\\b"
+        ]
+      },
+      "title": {
+        "en": "Network error (ECONNREFUSED, ECONNRESET, ETIMEDOUT, ENOTFOUND)",
+        "id": "Error jaringan (ECONNREFUSED, ECONNRESET, ETIMEDOUT, ENOTFOUND)"
+      },
+      "cause": {
+        "en": "No HTTP response arrived: the host name did not resolve (ENOTFOUND), the connection was refused (ECONNREFUSED), dropped (ECONNRESET) or timed out (ETIMEDOUT).",
+        "id": "Tidak ada respons HTTP: nama host tidak ditemukan (ENOTFOUND), koneksi ditolak (ECONNREFUSED), terputus (ECONNRESET), atau kehabisan waktu (ETIMEDOUT)."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Check the base URL spelling, your internet or proxy settings, and whether a local server (for example a local model runtime) is running; then retry.",
+        "id": "Cek ejaan base URL, koneksi internet atau pengaturan proxy, dan apakah server lokal (misalnya runtime model lokal) sedang berjalan; lalu ulangi."
+      },
+      "operator_fix": {
+        "en": "Check DNS, firewall and outbound network from the calling host.",
+        "id": "Cek DNS, firewall, dan jaringan keluar dari host pemanggil."
+      },
+      "docs": "https://nodejs.org/api/errors.html#common-system-errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+name: New error entry or feature
+description: Suggest a provider, an error entry, or a feature.
+labels: [enhancement]
+body:
+  - type: input
+    id: provider
+    attributes:
+      label: Provider or layer
+      placeholder: e.g. Cohere, vLLM, Azure OpenAI
+  - type: input
+    id: docs
+    attributes:
+      label: Public documentation URL that shows the error
+      description: Required for data entries. We only add errors that are publicly documented.
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Status, error type/code, message as documented, or the feature you would like.
+    validations:
+      required: true

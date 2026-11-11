@@ -1,0 +1,347 @@
+{
+  "provider": "openai",
+  "name": "OpenAI",
+  "source": "https://developers.openai.com/api/docs/guides/error-codes",
+  "entries": [
+    {
+      "id": "openai-400-invalid-service-tier",
+      "layer": "provider",
+      "status": 400,
+      "match": {
+        "type": ["invalid_request_error"],
+        "message": ["invalid `?service_tier`? argument"]
+      },
+      "title": {
+        "en": "400 Invalid service_tier argument",
+        "id": "400 Argumen service_tier tidak valid"
+      },
+      "cause": {
+        "en": "The service tier the request selected, or the tier that `auto`/an omitted value resolved to, is not allowed for this project.",
+        "id": "Tier layanan yang dipilih request, atau tier hasil `auto`/nilai kosong, tidak diizinkan untuk proyek ini."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Set `service_tier` to a tier your project allows. If you use `auto` or leave it out, ask the project owner which tiers are enabled.",
+        "id": "Isi `service_tier` dengan tier yang diizinkan proyekmu. Kalau memakai `auto` atau tidak diisi, tanyakan ke pemilik proyek tier mana yang aktif."
+      },
+      "operator_fix": {
+        "en": "Enable the needed tier in the project settings. A project cannot enable a tier that the organization blocks.",
+        "id": "Aktifkan tier yang dibutuhkan di pengaturan proyek. Proyek tidak bisa mengaktifkan tier yang diblokir organisasi."
+      },
+      "docs": "https://developers.openai.com/api/docs/guides/error-codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openai-401-invalid-api-key",
+      "layer": "provider",
+      "status": 401,
+      "match": {
+        "message": ["incorrect api key provided", "invalid authentication"]
+      },
+      "title": {
+        "en": "401 Incorrect API key provided / Invalid Authentication",
+        "id": "401 Incorrect API key provided / Invalid Authentication"
+      },
+      "cause": {
+        "en": "The key is wrong (typo or extra space), revoked or deleted, belongs to another organization or project, or an old key is still cached.",
+        "id": "Key salah (salah ketik atau ada spasi), sudah dicabut atau dihapus, milik organisasi atau proyek lain, atau key lama masih tersimpan di cache."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Copy the key again without spaces, check the organization/project header, and replace any cached old key. Generate a new key if unsure.",
+        "id": "Salin ulang key tanpa spasi, cek header organisasi/proyek, dan ganti key lama yang masih tersimpan. Buat key baru kalau ragu."
+      },
+      "operator_fix": {
+        "en": "Rotate the key in your secret store and redeploy so every instance reads the new value.",
+        "id": "Ganti key di penyimpanan rahasia lalu deploy ulang supaya semua instance membaca nilai baru."
+      },
+      "docs": "https://developers.openai.com/api/docs/guides/error-codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openai-401-not-organization-member",
+      "layer": "provider",
+      "status": 401,
+      "match": {
+        "message": ["must be a member of an organization to use the api"]
+      },
+      "title": {
+        "en": "401 You must be a member of an organization to use the API",
+        "id": "401 Akun harus menjadi anggota organisasi untuk memakai API"
+      },
+      "cause": {
+        "en": "The account is no longer part of an organization or project: it left, was removed, or the organization was deleted.",
+        "id": "Akun tidak lagi tergabung di organisasi atau proyek: keluar, dikeluarkan, atau organisasinya dihapus."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Ask an organization owner to invite you again, or create a new organization or project.",
+        "id": "Minta pemilik organisasi mengundangmu lagi, atau buat organisasi atau proyek baru."
+      },
+      "operator_fix": {
+        "en": "Re-invite the member on the team page, or add them back to the project.",
+        "id": "Undang ulang anggota di halaman tim, atau tambahkan kembali ke proyek."
+      },
+      "docs": "https://developers.openai.com/api/docs/guides/error-codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openai-403-unsupported-country",
+      "layer": "provider",
+      "status": 403,
+      "match": {
+        "message": ["country, region,? or territory not supported"]
+      },
+      "title": {
+        "en": "403 Country, region, or territory not supported",
+        "id": "403 Negara, wilayah, atau teritori tidak didukung"
+      },
+      "cause": {
+        "en": "The request comes from a country, region or territory where the API is not offered.",
+        "id": "Request berasal dari negara, wilayah, atau teritori yang tidak dilayani API ini."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the provider's supported-countries list. Calls must come from a supported location under the provider's terms.",
+        "id": "Cek daftar negara yang didukung penyedia. Panggilan harus berasal dari lokasi yang didukung sesuai ketentuan penyedia."
+      },
+      "operator_fix": {
+        "en": "Run the backend that calls the API in a supported region, within the provider's terms.",
+        "id": "Jalankan backend yang memanggil API di wilayah yang didukung, sesuai ketentuan penyedia."
+      },
+      "docs": "https://developers.openai.com/api/docs/guides/error-codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openai-429-credit-balance-exhausted",
+      "layer": "provider",
+      "status": 429,
+      "match": {
+        "code": ["credit_balance_exhausted"]
+      },
+      "title": {
+        "en": "429 Credit balance exhausted (credit_balance_exhausted)",
+        "id": "429 Saldo kredit habis (credit_balance_exhausted)"
+      },
+      "cause": {
+        "en": "The organization has no prepaid credits left. This is a billing state, not a speed limit.",
+        "id": "Organisasi tidak punya sisa kredit prabayar. Ini masalah tagihan, bukan batas kecepatan."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Add credits in the billing settings. Retrying without adding credits keeps failing.",
+        "id": "Tambah kredit di pengaturan tagihan. Retry tanpa menambah kredit akan terus gagal."
+      },
+      "operator_fix": {
+        "en": "Top up the prepaid balance or enable auto-recharge, and alert on low balance before it reaches zero.",
+        "id": "Isi saldo prabayar atau aktifkan isi ulang otomatis, dan pasang peringatan saldo rendah sebelum habis."
+      },
+      "docs": "https://developers.openai.com/api/docs/guides/error-codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openai-429-insufficient-quota",
+      "layer": "provider",
+      "status": 429,
+      "match": {
+        "type": ["insufficient_quota"],
+        "code": ["insufficient_quota"]
+      },
+      "title": {
+        "en": "429 insufficient_quota",
+        "id": "429 insufficient_quota (kuota tidak cukup)"
+      },
+      "cause": {
+        "en": "A billing, spend or quota limit blocks the request. Billing errors can carry the broad type `insufficient_quota`; `error.code` names the exact cause.",
+        "id": "Batas tagihan, belanja, atau kuota memblokir request. Error tagihan bisa memakai tipe umum `insufficient_quota`; `error.code` menyebut penyebab tepatnya."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Read `error.code`, then add credits or raise the spend/usage limit. Retrying alone does not restore access.",
+        "id": "Baca `error.code`, lalu tambah kredit atau naikkan batas belanja/pemakaian. Retry saja tidak memulihkan akses."
+      },
+      "operator_fix": {
+        "en": "Treat this as a billing alert, not a rate limit: do not put it in a retry loop.",
+        "id": "Perlakukan sebagai peringatan tagihan, bukan rate limit: jangan masukkan ke loop retry."
+      },
+      "docs": "https://developers.openai.com/api/docs/guides/error-codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openai-429-rate-limit-reached",
+      "layer": "provider",
+      "status": 429,
+      "match": {
+        "message": ["rate limit reached for"]
+      },
+      "title": {
+        "en": "429 Rate limit reached for requests",
+        "id": "429 Rate limit tercapai"
+      },
+      "cause": {
+        "en": "Too many requests or tokens in a short window: a loop or high concurrency, a key shared with other apps, a low tier, or a project limit.",
+        "id": "Terlalu banyak request atau token dalam waktu singkat: loop atau paralel tinggi, key dipakai aplikasi lain, tier rendah, atau batas proyek."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Wait at least as long as `Retry-After` says. Without it, use exponential backoff with jitter and a retry cap. Lower concurrency.",
+        "id": "Tunggu minimal sesuai `Retry-After`. Kalau tidak ada, pakai exponential backoff dengan jitter dan batas jumlah retry. Kurangi request paralel."
+      },
+      "operator_fix": {
+        "en": "Limits apply per organization, not per user. Check team usage, raise project limits, or move to a higher usage tier.",
+        "id": "Batas berlaku per organisasi, bukan per pengguna. Cek pemakaian tim, naikkan batas proyek, atau pindah ke tier pemakaian lebih tinggi."
+      },
+      "docs": "https://developers.openai.com/api/docs/guides/error-codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openai-429-slow-down",
+      "layer": "provider",
+      "status": 429,
+      "match": {
+        "type": ["rate_limit_error"],
+        "code": ["slow_down"]
+      },
+      "title": {
+        "en": "429 Slow down (slow_down)",
+        "id": "429 Slow down (slow_down): naikkan trafik pelan-pelan"
+      },
+      "cause": {
+        "en": "Traffic ramped up faster than the service can absorb. It can happen even below your RPM and TPM limits.",
+        "id": "Trafik naik lebih cepat dari yang bisa diterima layanan. Bisa terjadi walau masih di bawah batas RPM dan TPM."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Honour `Retry-After`, add jitter, then raise the request rate gradually and keep it steady.",
+        "id": "Ikuti `Retry-After`, tambahkan jitter, lalu naikkan laju request bertahap dan jaga tetap stabil."
+      },
+      "operator_fix": {
+        "en": "Ramp up slowly; the documented rule of thumb above 1M input TPM is at most +50% every 15 minutes.",
+        "id": "Naikkan trafik perlahan; patokan di dokumentasi di atas 1 juta TPM input adalah maksimal +50% per 15 menit."
+      },
+      "docs": "https://developers.openai.com/api/docs/guides/error-codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openai-429-spend-limit-reached",
+      "layer": "provider",
+      "status": 429,
+      "match": {
+        "code": ["organization_spend_limit_exceeded", "project_spend_limit_exceeded"]
+      },
+      "title": {
+        "en": "429 Organization or project spend limit reached",
+        "id": "429 Batas belanja organisasi atau proyek tercapai"
+      },
+      "cause": {
+        "en": "A monthly spend limit that you set on the organization or the project was reached.",
+        "id": "Batas belanja bulanan yang kamu atur di organisasi atau proyek sudah tercapai."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Ask the owner to raise or remove the limit, or wait for the monthly reset.",
+        "id": "Minta pemilik menaikkan atau menghapus batasnya, atau tunggu reset bulanan."
+      },
+      "operator_fix": {
+        "en": "Raise the limit in organization or project limit settings. Other projects keep working unless their own or the organization limit is hit.",
+        "id": "Naikkan batas di pengaturan limit organisasi atau proyek. Proyek lain tetap jalan kecuali batasnya sendiri atau batas organisasi juga tercapai."
+      },
+      "docs": "https://developers.openai.com/api/docs/guides/error-codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openai-429-usage-limit-reached",
+      "layer": "provider",
+      "status": 429,
+      "match": {
+        "code": ["organization_usage_limit_exceeded"]
+      },
+      "title": {
+        "en": "429 Organization usage limit reached",
+        "id": "429 Batas pemakaian organisasi tercapai"
+      },
+      "cause": {
+        "en": "The organization hit the monthly usage limit assigned by the provider. This is separate from spend limits you configure.",
+        "id": "Organisasi mencapai batas pemakaian bulanan yang ditetapkan penyedia. Ini terpisah dari batas belanja yang kamu atur sendiri."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Wait for the monthly reset or ask the organization owner to request a higher limit.",
+        "id": "Tunggu reset bulanan atau minta pemilik organisasi mengajukan batas lebih tinggi."
+      },
+      "operator_fix": {
+        "en": "Request a higher approved usage limit or contact provider support.",
+        "id": "Ajukan kenaikan batas pemakaian atau hubungi dukungan penyedia."
+      },
+      "docs": "https://developers.openai.com/api/docs/guides/error-codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openai-500-server-error",
+      "layer": "provider",
+      "status": 500,
+      "match": {
+        "message": ["the server had an error while processing your request"]
+      },
+      "title": {
+        "en": "500 The server had an error while processing your request",
+        "id": "500 Server error saat memproses request"
+      },
+      "cause": {
+        "en": "A problem on the provider's servers, not in your request.",
+        "id": "Masalah di server penyedia, bukan di request-mu."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry after a short wait with backoff. If it persists, check the provider status page.",
+        "id": "Ulangi setelah jeda singkat dengan backoff. Kalau terus terjadi, cek halaman status penyedia."
+      },
+      "operator_fix": {
+        "en": "Cap retries, log the request ID, and contact support with model, timestamp and error if it continues.",
+        "id": "Batasi jumlah retry, catat request ID, dan hubungi dukungan dengan model, waktu, dan error kalau berlanjut."
+      },
+      "docs": "https://developers.openai.com/api/docs/guides/error-codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openai-503-server-overloaded",
+      "layer": "provider",
+      "status": 503,
+      "match": {
+        "type": ["service_unavailable_error"],
+        "code": ["server_is_overloaded"]
+      },
+      "title": {
+        "en": "503 Model temporarily overloaded (server_is_overloaded)",
+        "id": "503 Model sedang penuh (server_is_overloaded)"
+      },
+      "cause": {
+        "en": "The requested model does not have enough capacity right now.",
+        "id": "Model yang diminta sedang tidak punya kapasitas cukup."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Honour `Retry-After`, otherwise increase the delay between retries. Check the status page if it continues.",
+        "id": "Ikuti `Retry-After`, kalau tidak ada perpanjang jeda antar retry. Cek halaman status kalau berlanjut."
+      },
+      "operator_fix": {
+        "en": "Handle 503 and 429 in the same backoff path and read `error.code`; some overload cases moved from 429 to 503.",
+        "id": "Tangani 503 dan 429 di jalur backoff yang sama dan baca `error.code`; sebagian kasus overload pindah dari 429 ke 503."
+      },
+      "docs": "https://developers.openai.com/api/docs/guides/error-codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    }
+  ]
+}

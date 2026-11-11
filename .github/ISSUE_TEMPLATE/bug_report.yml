@@ -1,0 +1,29 @@
+name: Bug or wrong explanation
+description: The CLI, library or site explains an error wrongly, or something crashes.
+labels: [bug]
+body:
+  - type: textarea
+    id: input
+    attributes:
+      label: Error input
+      description: The error you pasted. Remove API keys, account IDs and anything private.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: got
+    attributes:
+      label: Entry id you got
+      placeholder: http-429
+  - type: input
+    id: expected
+    attributes:
+      label: Entry id or explanation you expected
+  - type: input
+    id: docs
+    attributes:
+      label: Link to the provider's public documentation (if the data is wrong)
+  - type: input
+    id: version
+    attributes:
+      label: Version (npx llm-error-atlas --version) and Node version

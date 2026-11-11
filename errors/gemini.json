@@ -1,0 +1,237 @@
+{
+  "provider": "gemini",
+  "name": "Google Gemini API",
+  "source": "https://aistudio.google.com/docs/api-errors",
+  "entries": [
+    {
+      "id": "gemini-400-failed-precondition",
+      "layer": "provider",
+      "status": 400,
+      "match": { "code": ["failed_precondition"] },
+      "title": { "en": "400 failed_precondition", "id": "400 failed_precondition (syarat belum terpenuhi)" },
+      "cause": {
+        "en": "A prerequisite for the request is not met, for example billing is disabled for the project.",
+        "id": "Ada syarat yang belum terpenuhi, misalnya billing proyek belum aktif."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the project's billing status and account prerequisites, then send again.",
+        "id": "Cek status billing proyek dan syarat akun, lalu kirim lagi."
+      },
+      "operator_fix": {
+        "en": "Enable billing or complete the missing account step for the project behind the key.",
+        "id": "Aktifkan billing atau selesaikan langkah akun yang kurang untuk proyek pemilik key."
+      },
+      "docs": "https://aistudio.google.com/docs/api-errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "gemini-401-authentication",
+      "layer": "provider",
+      "status": 401,
+      "match": { "code": ["authentication"] },
+      "title": { "en": "401 authentication", "id": "401 authentication (API key bermasalah)" },
+      "cause": {
+        "en": "The API key is missing, invalid or expired.",
+        "id": "API key tidak dikirim, tidak valid, atau kedaluwarsa."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Send a valid key and check its status in Google AI Studio.",
+        "id": "Kirim key yang valid dan cek statusnya di Google AI Studio."
+      },
+      "operator_fix": {
+        "en": "Rotate the key and confirm the deployment reads the new value.",
+        "id": "Ganti key dan pastikan deployment membaca nilai yang baru."
+      },
+      "docs": "https://aistudio.google.com/docs/api-errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "gemini-402-payment-required",
+      "layer": "provider",
+      "status": 402,
+      "match": { "code": ["payment_required"] },
+      "title": { "en": "402 payment_required", "id": "402 payment_required (kredit prabayar habis)" },
+      "cause": {
+        "en": "The prepay credit balance is used up.",
+        "id": "Saldo kredit prabayar sudah habis."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Add credits to the billing account or turn on auto-reload. Do not retry until credits are added.",
+        "id": "Tambah kredit ke akun billing atau aktifkan isi ulang otomatis. Jangan retry sebelum kredit ditambah."
+      },
+      "operator_fix": {
+        "en": "Alert on low prepay balance and keep auto-reload on for production projects.",
+        "id": "Pasang peringatan saldo prabayar rendah dan aktifkan isi ulang otomatis untuk proyek produksi."
+      },
+      "docs": "https://aistudio.google.com/docs/api-errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "gemini-403-permission-denied",
+      "layer": "provider",
+      "status": 403,
+      "match": { "code": ["permission_denied"], "message": ["your project has been denied access"] },
+      "title": { "en": "403 PERMISSION_DENIED / permission_denied", "id": "403 PERMISSION_DENIED (akses ditolak)" },
+      "cause": {
+        "en": "The key lacks permission, or the project is restricted, needs verification, or has a billing problem. The AI Studio project status shows which one.",
+        "id": "Key tidak punya izin, atau proyek dibatasi, perlu verifikasi, atau ada masalah billing. Status proyek di AI Studio menunjukkan penyebabnya."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Open the project in Google AI Studio and follow the status shown there (Verification needed, Restricted, Payment needed, Unavailable).",
+        "id": "Buka proyek di Google AI Studio dan ikuti status yang tampil (Verification needed, Restricted, Payment needed, Unavailable)."
+      },
+      "operator_fix": {
+        "en": "Fix verification or billing for the Google Cloud project. A new key in the same project does not help.",
+        "id": "Perbaiki verifikasi atau billing proyek Google Cloud. Key baru di proyek yang sama tidak membantu."
+      },
+      "docs": "https://aistudio.google.com/docs/troubleshooting",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "gemini-403-api-key-leaked",
+      "layer": "provider",
+      "status": 403,
+      "match": { "message": ["your api key was reported as leaked"] },
+      "title": { "en": "403 Your API key was reported as leaked", "id": "403 API key dilaporkan bocor" },
+      "cause": {
+        "en": "The key was found publicly exposed and is now blocked from the Gemini API.",
+        "id": "Key ditemukan terekspos publik dan sekarang diblokir dari Gemini API."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Create a new key in Google AI Studio and replace the old one everywhere.",
+        "id": "Buat key baru di Google AI Studio dan ganti key lama di semua tempat."
+      },
+      "operator_fix": {
+        "en": "Remove keys from client-side code and public repositories; keep them on the server only.",
+        "id": "Hapus key dari kode sisi klien dan repositori publik; simpan hanya di server."
+      },
+      "docs": "https://aistudio.google.com/docs/troubleshooting",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "gemini-403-free-tier-verification-required",
+      "layer": "provider",
+      "status": 403,
+      "match": { "code": ["free_tier_verification_required"], "message": ["free_tier_verification_required"] },
+      "title": { "en": "403 FREE_TIER_VERIFICATION_REQUIRED", "id": "403 FREE_TIER_VERIFICATION_REQUIRED (perlu verifikasi)" },
+      "cause": {
+        "en": "The project or account must be verified before it can use the free tier.",
+        "id": "Proyek atau akun harus diverifikasi sebelum bisa memakai free tier."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Verify with a mobile device in Google AI Studio, or set up billing to use the paid tier.",
+        "id": "Verifikasi dengan perangkat seluler di Google AI Studio, atau aktifkan billing untuk memakai tier berbayar."
+      },
+      "operator_fix": {
+        "en": "Complete project verification or link a Cloud Billing account.",
+        "id": "Selesaikan verifikasi proyek atau tautkan akun Cloud Billing."
+      },
+      "docs": "https://aistudio.google.com/docs/troubleshooting",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "gemini-404-model-not-found",
+      "layer": "provider",
+      "status": 404,
+      "match": { "code": ["model_not_found"] },
+      "title": { "en": "404 model_not_found", "id": "404 model_not_found (model tidak ditemukan)" },
+      "cause": {
+        "en": "The model named in the request was not found.",
+        "id": "Model yang disebut di request tidak ditemukan."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the model name against the models page, or fall back to another model.",
+        "id": "Cocokkan nama model dengan halaman daftar model, atau pakai model lain."
+      },
+      "operator_fix": {
+        "en": "Keep model names in configuration and update them when models are retired.",
+        "id": "Simpan nama model di konfigurasi dan perbarui saat model dipensiunkan."
+      },
+      "docs": "https://aistudio.google.com/docs/api-errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "gemini-429-rate-limit-exceeded",
+      "layer": "provider",
+      "status": 429,
+      "match": { "code": ["rate_limit_exceeded", "too_many_requests", "resource_exhausted"] },
+      "title": { "en": "429 RESOURCE_EXHAUSTED / rate_limit_exceeded", "id": "429 RESOURCE_EXHAUSTED (rate limit)" },
+      "cause": {
+        "en": "Too many requests or tokens per minute or per second for the project.",
+        "id": "Terlalu banyak request atau token per menit atau per detik untuk proyek ini."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry with exponential backoff and jitter (for example 1s, 2s, 4s) and a retry cap.",
+        "id": "Ulangi dengan exponential backoff dan jitter (misalnya 1 dtk, 2 dtk, 4 dtk) dan batas jumlah retry."
+      },
+      "operator_fix": {
+        "en": "Spread traffic, check the project's rate limits, and request a higher tier if needed.",
+        "id": "Sebarkan trafik, cek batas rate proyek, dan ajukan tier lebih tinggi kalau perlu."
+      },
+      "docs": "https://aistudio.google.com/docs/api-errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "gemini-429-quota-exceeded",
+      "layer": "provider",
+      "status": 429,
+      "match": { "code": ["quota_exceeded"] },
+      "title": { "en": "429 quota_exceeded", "id": "429 quota_exceeded (kuota harian habis)" },
+      "cause": {
+        "en": "The daily quota for the project is used up.",
+        "id": "Kuota harian proyek sudah habis."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Wait until the quota resets or request a quota increase. Short retries will not help.",
+        "id": "Tunggu sampai kuota reset atau ajukan kenaikan kuota. Retry dalam waktu dekat tidak membantu."
+      },
+      "operator_fix": {
+        "en": "Move to a paid tier or request more quota; alert before the daily cap is reached.",
+        "id": "Pindah ke tier berbayar atau ajukan kuota tambahan; pasang peringatan sebelum batas harian tercapai."
+      },
+      "docs": "https://aistudio.google.com/docs/api-errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "gemini-503-service-unavailable",
+      "layer": "provider",
+      "status": 503,
+      "match": { "code": ["service_unavailable", "unavailable"] },
+      "title": { "en": "503 UNAVAILABLE / service_unavailable", "id": "503 UNAVAILABLE (layanan sedang penuh)" },
+      "cause": {
+        "en": "The service is temporarily overloaded or down.",
+        "id": "Layanan sedang penuh atau sementara tidak tersedia."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Wait and retry with exponential backoff. The SDKs retry 429 and 5xx automatically.",
+        "id": "Tunggu lalu ulangi dengan exponential backoff. SDK otomatis retry 429 dan 5xx."
+      },
+      "operator_fix": {
+        "en": "Cap retries and consider a fallback model for user-facing paths.",
+        "id": "Batasi retry dan pertimbangkan model cadangan untuk jalur yang langsung dipakai pengguna."
+      },
+      "docs": "https://aistudio.google.com/docs/api-errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    }
+  ]
+}

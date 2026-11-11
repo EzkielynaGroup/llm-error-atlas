@@ -1,0 +1,145 @@
+{
+  "provider": "deepseek",
+  "name": "DeepSeek",
+  "source": "https://api-docs.deepseek.com/quick_start/error_codes",
+  "entries": [
+    {
+      "id": "deepseek-400-invalid-format",
+      "layer": "provider",
+      "status": 400,
+      "match": {},
+      "title": { "en": "400 Invalid Format", "id": "400 Invalid Format (format body salah)" },
+      "cause": {
+        "en": "The request body format is invalid.",
+        "id": "Format body request tidak valid."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Fix the body using the hints in the error message and the API reference.",
+        "id": "Perbaiki body sesuai petunjuk di pesan error dan referensi API."
+      },
+      "operator_fix": {
+        "en": "Validate JSON and required fields before sending.",
+        "id": "Validasi JSON dan field wajib sebelum mengirim."
+      },
+      "docs": "https://api-docs.deepseek.com/quick_start/error_codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "deepseek-401-authentication-fails",
+      "layer": "provider",
+      "status": 401,
+      "match": { "message": ["authentication fails"] },
+      "title": { "en": "401 Authentication Fails", "id": "401 Authentication Fails (key salah)" },
+      "cause": {
+        "en": "Authentication failed because the API key is wrong.",
+        "id": "Autentikasi gagal karena API key salah."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the API key, or create one if you do not have it yet.",
+        "id": "Cek API key, atau buat key baru kalau belum punya."
+      },
+      "operator_fix": {
+        "en": "Rotate the key in your secret store and redeploy.",
+        "id": "Ganti key di penyimpanan rahasia lalu deploy ulang."
+      },
+      "docs": "https://api-docs.deepseek.com/quick_start/error_codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "deepseek-402-insufficient-balance",
+      "layer": "provider",
+      "status": 402,
+      "match": { "message": ["insufficient balance"] },
+      "title": { "en": "402 Insufficient Balance", "id": "402 Insufficient Balance (saldo habis)" },
+      "cause": {
+        "en": "The account balance has run out.",
+        "id": "Saldo akun sudah habis."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the account balance and top up. Retrying before that keeps failing.",
+        "id": "Cek saldo akun lalu isi ulang. Retry sebelum itu akan terus gagal."
+      },
+      "operator_fix": {
+        "en": "Alert on low balance and stop retries on 402.",
+        "id": "Pasang peringatan saldo rendah dan hentikan retry untuk 402."
+      },
+      "docs": "https://api-docs.deepseek.com/quick_start/error_codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "deepseek-422-invalid-parameters",
+      "layer": "provider",
+      "status": 422,
+      "match": {},
+      "title": { "en": "422 Invalid Parameters", "id": "422 Invalid Parameters (parameter tidak valid)" },
+      "cause": {
+        "en": "The request contains invalid parameters.",
+        "id": "Request berisi parameter yang tidak valid."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Change the parameters named in the error message and check the API reference.",
+        "id": "Ubah parameter yang disebut di pesan error dan cek referensi API."
+      },
+      "operator_fix": {
+        "en": "Strip parameters that the target model does not support before sending.",
+        "id": "Buang parameter yang tidak didukung model tujuan sebelum mengirim."
+      },
+      "docs": "https://api-docs.deepseek.com/quick_start/error_codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "deepseek-429-rate-limit-reached",
+      "layer": "provider",
+      "status": 429,
+      "match": {},
+      "title": { "en": "429 Rate Limit Reached", "id": "429 Rate Limit Reached (terlalu cepat)" },
+      "cause": {
+        "en": "Requests are sent too quickly, or a concurrency or QPS limit was exceeded.",
+        "id": "Request dikirim terlalu cepat, atau batas paralel atau QPS terlampaui."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Pace requests and retry with backoff.",
+        "id": "Atur jeda antar request dan ulangi dengan backoff."
+      },
+      "operator_fix": {
+        "en": "Check the per-model limits on the rate-limit page and cap concurrency.",
+        "id": "Cek batas per model di halaman rate limit dan batasi jumlah paralel."
+      },
+      "docs": "https://api-docs.deepseek.com/quick_start/error_codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "deepseek-503-server-overloaded",
+      "layer": "provider",
+      "status": 503,
+      "match": { "message": ["server overloaded"] },
+      "title": { "en": "503 Server Overloaded", "id": "503 Server Overloaded (server penuh)" },
+      "cause": {
+        "en": "The server is overloaded because of high traffic.",
+        "id": "Server penuh karena trafik tinggi."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry after a short wait with backoff.",
+        "id": "Ulangi setelah jeda singkat dengan backoff."
+      },
+      "operator_fix": {
+        "en": "Cap retries and consider a fallback model during peaks.",
+        "id": "Batasi retry dan pertimbangkan model cadangan saat jam sibuk."
+      },
+      "docs": "https://api-docs.deepseek.com/quick_start/error_codes",
+      "last_verified": "2026-11-12",
+      "verified": true
+    }
+  ]
+}

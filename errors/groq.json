@@ -1,0 +1,122 @@
+{
+  "provider": "groq",
+  "name": "Groq",
+  "source": "https://console.groq.com/docs/errors",
+  "entries": [
+    {
+      "id": "groq-413-request-entity-too-large",
+      "layer": "provider",
+      "status": 413,
+      "match": {},
+      "title": { "en": "413 Request Entity Too Large", "id": "413 Request Entity Too Large (body terlalu besar)" },
+      "cause": {
+        "en": "The request body is too large.",
+        "id": "Body request terlalu besar."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Reduce the size of the request body: shorter context, fewer or smaller attachments.",
+        "id": "Perkecil body request: konteks lebih pendek, lampiran lebih sedikit atau lebih kecil."
+      },
+      "operator_fix": {
+        "en": "Check body size before sending and trim history automatically.",
+        "id": "Cek ukuran body sebelum mengirim dan pangkas riwayat secara otomatis."
+      },
+      "docs": "https://console.groq.com/docs/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "groq-422-unprocessable-entity",
+      "layer": "provider",
+      "status": 422,
+      "match": {},
+      "title": { "en": "422 Unprocessable Entity", "id": "422 Unprocessable Entity (tidak bisa diproses)" },
+      "cause": {
+        "en": "The request was well formed but could not be followed because of semantic errors or model hallucinations.",
+        "id": "Request formatnya benar tapi tidak bisa dijalankan karena kesalahan makna atau halusinasi model."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Check the data for correctness and completeness, or retry the request.",
+        "id": "Cek kebenaran dan kelengkapan data, atau ulangi request."
+      },
+      "operator_fix": {
+        "en": "Retry a limited number of times; if it repeats, log the payload for review.",
+        "id": "Retry dengan jumlah terbatas; kalau berulang, catat payload untuk ditinjau."
+      },
+      "docs": "https://console.groq.com/docs/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "groq-424-failed-dependency",
+      "layer": "provider",
+      "status": 424,
+      "match": {},
+      "title": { "en": "424 Failed Dependency", "id": "424 Failed Dependency (request turunan gagal)" },
+      "cause": {
+        "en": "A dependent request failed, for example a Remote MCP server with an authentication problem.",
+        "id": "Request turunan gagal, misalnya server Remote MCP yang bermasalah di autentikasi."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the credentials and URL of the remote MCP server or tool you attached.",
+        "id": "Cek kredensial dan URL server MCP remote atau tool yang kamu pasang."
+      },
+      "operator_fix": {
+        "en": "Test each remote tool separately before attaching it to model calls.",
+        "id": "Uji setiap tool remote secara terpisah sebelum dipasang ke panggilan model."
+      },
+      "docs": "https://console.groq.com/docs/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "groq-498-flex-tier-capacity-exceeded",
+      "layer": "provider",
+      "status": 498,
+      "match": {},
+      "title": { "en": "498 Flex Tier Capacity Exceeded", "id": "498 Kapasitas Flex Tier penuh" },
+      "cause": {
+        "en": "A custom status: the flex tier is at capacity and the request was not processed.",
+        "id": "Status khusus: flex tier sedang penuh dan request tidak diproses."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Try again later, with backoff.",
+        "id": "Coba lagi nanti, dengan backoff."
+      },
+      "operator_fix": {
+        "en": "Treat 498 as retryable in your HTTP client; many clients only retry 429 and 5xx by default.",
+        "id": "Masukkan 498 sebagai status yang boleh di-retry di klien HTTP; banyak klien hanya retry 429 dan 5xx secara default."
+      },
+      "docs": "https://console.groq.com/docs/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "groq-500-internal-server-error",
+      "layer": "provider",
+      "status": 500,
+      "match": {},
+      "title": { "en": "500 Internal Server Error (not charged)", "id": "500 Internal Server Error (tidak ditagih)" },
+      "cause": {
+        "en": "A generic server-side error. Requests that return server error codes are not charged.",
+        "id": "Error umum di sisi server. Request yang berakhir dengan kode error server tidak ditagih."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Try again later; contact support if it persists.",
+        "id": "Coba lagi nanti; hubungi dukungan kalau terus terjadi."
+      },
+      "operator_fix": {
+        "en": "Retry with backoff and a cap; 502 and 503 are also documented as temporary.",
+        "id": "Retry dengan backoff dan batas; 502 dan 503 juga disebut sementara di dokumentasi."
+      },
+      "docs": "https://console.groq.com/docs/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    }
+  ]
+}

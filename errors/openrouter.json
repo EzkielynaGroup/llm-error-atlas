@@ -1,0 +1,240 @@
+{
+  "provider": "openrouter",
+  "name": "OpenRouter",
+  "source": "https://openrouter.ai/docs/api_reference/errors-and-debugging",
+  "entries": [
+    {
+      "id": "openrouter-401-authentication",
+      "layer": "gateway",
+      "status": 401,
+      "match": { "type": ["authentication"] },
+      "title": { "en": "401 Invalid credentials (authentication)", "id": "401 Kredensial tidak valid (authentication)" },
+      "cause": {
+        "en": "The API key is missing, invalid, disabled or revoked, or the OAuth session expired.",
+        "id": "API key tidak dikirim, tidak valid, dinonaktifkan atau dicabut, atau sesi OAuth kedaluwarsa."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the key and the `Authorization: Bearer` header; sign in again if you use OAuth.",
+        "id": "Cek key dan header `Authorization: Bearer`; login ulang kalau memakai OAuth."
+      },
+      "operator_fix": {
+        "en": "Rotate the key and confirm it is enabled in the dashboard.",
+        "id": "Ganti key dan pastikan statusnya aktif di dashboard."
+      },
+      "docs": "https://openrouter.ai/docs/api_reference/errors-and-debugging",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openrouter-402-insufficient-credits",
+      "layer": "gateway",
+      "status": 402,
+      "match": { "type": ["payment_required"], "code": ["openrouter_in_flight_budget"] },
+      "title": { "en": "402 Insufficient credits (payment_required)", "id": "402 Kredit tidak cukup (payment_required)" },
+      "cause": {
+        "en": "The account or API key does not have enough credits. A 402 with `limit_source` `openrouter_in_flight_budget` means an in-flight spending budget and may carry `Retry-After`.",
+        "id": "Akun atau API key tidak punya kredit cukup. 402 dengan `limit_source` `openrouter_in_flight_budget` berarti batas belanja yang sedang berjalan dan bisa membawa `Retry-After`."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Add credits, then retry. For the in-flight budget case, read `Retry-After` and retry explicitly; SDKs do not retry 402.",
+        "id": "Tambah kredit, lalu ulangi. Untuk kasus in-flight budget, baca `Retry-After` dan retry sendiri; SDK tidak me-retry 402."
+      },
+      "operator_fix": {
+        "en": "Alert on low credit and raise per-key limits where needed.",
+        "id": "Pasang peringatan kredit rendah dan naikkan batas per key bila perlu."
+      },
+      "docs": "https://openrouter.ai/docs/api_reference/errors-and-debugging",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openrouter-403-budget-limit-exceeded",
+      "layer": "gateway",
+      "status": 403,
+      "match": {
+        "code": ["openrouter_guardrail_budget", "openrouter_workspace_budget", "openrouter_key_limit"],
+        "message": ["budget limit exceeded"]
+      },
+      "title": { "en": "403 Budget limit exceeded", "id": "403 Batas budget terlampaui" },
+      "cause": {
+        "en": "A guardrail budget, a workspace budget, or the key's own limit is spent. The request is rejected before it reaches a provider.",
+        "id": "Budget guardrail, budget workspace, atau batas key sendiri sudah habis. Request ditolak sebelum sampai ke provider."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Wait for the budget window to reset (`metadata.resets_at`) or ask the org admin to raise the budget.",
+        "id": "Tunggu jendela budget reset (`metadata.resets_at`) atau minta admin organisasi menaikkan budget."
+      },
+      "operator_fix": {
+        "en": "Branch on `error.metadata.limit_source`, not on the message text; raise the limit named in `scope`.",
+        "id": "Bedakan lewat `error.metadata.limit_source`, bukan teks pesan; naikkan batas yang disebut di `scope`."
+      },
+      "docs": "https://openrouter.ai/docs/api_reference/errors-and-debugging",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openrouter-403-guardrail-blocked",
+      "layer": "gateway",
+      "status": 403,
+      "match": { "message": ["^request blocked:"] },
+      "title": { "en": "403 Request blocked by a guardrail", "id": "403 Request diblokir guardrail" },
+      "cause": {
+        "en": "A guardrail configured on the account (for example a content filter or prompt-injection detector) blocked the request before any provider saw it.",
+        "id": "Guardrail yang diatur di akun (misalnya filter konten atau detektor prompt injection) memblokir request sebelum sampai ke provider."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Change the input that triggered the rule (see `error.metadata`), or ask the admin to adjust the guardrail.",
+        "id": "Ubah input yang memicu aturan (lihat `error.metadata`), atau minta admin menyesuaikan guardrail."
+      },
+      "operator_fix": {
+        "en": "Review the guardrail rules for false positives on legitimate traffic.",
+        "id": "Tinjau aturan guardrail untuk false positive pada trafik yang sah."
+      },
+      "docs": "https://openrouter.ai/docs/api_reference/errors-and-debugging",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openrouter-403-content-policy",
+      "layer": "gateway",
+      "status": 403,
+      "match": { "type": ["content_policy_violation", "refusal"] },
+      "title": { "en": "403 content_policy_violation / refusal", "id": "403 content_policy_violation / refusal (ditolak kebijakan konten)" },
+      "cause": {
+        "en": "A content filter flagged the input or output, or the provider reported a model refusal as an error.",
+        "id": "Filter konten menandai input atau output, atau provider melaporkan penolakan model sebagai error."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Rephrase the input; read `error.metadata.reasons` for moderation details.",
+        "id": "Ubah susunan input; baca `error.metadata.reasons` untuk detail moderasi."
+      },
+      "operator_fix": {
+        "en": "Do not retry automatically; surface the reason to the user.",
+        "id": "Jangan retry otomatis; tampilkan alasannya ke pengguna."
+      },
+      "docs": "https://openrouter.ai/docs/api_reference/errors-and-debugging",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openrouter-400-context-length-exceeded",
+      "layer": "gateway",
+      "status": 400,
+      "match": { "type": ["context_length_exceeded"] },
+      "title": { "en": "400 context_length_exceeded", "id": "400 context_length_exceeded (konteks terlalu panjang)" },
+      "cause": {
+        "en": "Input tokens plus requested output tokens exceed the model's context window.",
+        "id": "Token input ditambah token output yang diminta melebihi jendela konteks model."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Shorten the conversation or documents, lower `max_tokens`, or pick a model with a larger context.",
+        "id": "Persingkat percakapan atau dokumen, turunkan `max_tokens`, atau pilih model dengan konteks lebih besar."
+      },
+      "operator_fix": {
+        "en": "Count tokens before sending and trim or summarize old turns automatically.",
+        "id": "Hitung token sebelum mengirim dan pangkas atau ringkas giliran lama secara otomatis."
+      },
+      "docs": "https://openrouter.ai/docs/api_reference/errors-and-debugging",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openrouter-429-rate-limit-exceeded",
+      "layer": "gateway",
+      "status": 429,
+      "match": { "type": ["rate_limit_exceeded"] },
+      "title": { "en": "429 rate_limit_exceeded", "id": "429 rate_limit_exceeded (rate limit)" },
+      "cause": {
+        "en": "A request- or token-level rate limit was hit, at the gateway or at the upstream provider.",
+        "id": "Batas rate per request atau per token tercapai, di gateway atau di provider upstream."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Wait for `Retry-After` when present, then retry with backoff.",
+        "id": "Tunggu sesuai `Retry-After` kalau ada, lalu ulangi dengan backoff."
+      },
+      "operator_fix": {
+        "en": "Spread load over time or over several models and providers.",
+        "id": "Sebarkan beban dari sisi waktu atau ke beberapa model dan provider."
+      },
+      "docs": "https://openrouter.ai/docs/api_reference/errors-and-debugging",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openrouter-502-provider-unavailable",
+      "layer": "gateway",
+      "status": 502,
+      "match": { "type": ["provider_unavailable"] },
+      "title": { "en": "502 provider_unavailable (model down)", "id": "502 provider_unavailable (model sedang down)" },
+      "cause": {
+        "en": "The chosen model is down, or the upstream provider returned an invalid or empty response.",
+        "id": "Model yang dipilih sedang down, atau provider upstream mengembalikan respons tidak valid atau kosong."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry with backoff, or enable fallback routing so another provider can serve the request.",
+        "id": "Ulangi dengan backoff, atau aktifkan fallback routing supaya provider lain bisa melayani."
+      },
+      "operator_fix": {
+        "en": "Configure provider fallbacks for production models.",
+        "id": "Atur fallback provider untuk model produksi."
+      },
+      "docs": "https://openrouter.ai/docs/api_reference/errors-and-debugging",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openrouter-503-no-available-provider",
+      "layer": "gateway",
+      "status": 503,
+      "match": { "type": ["provider_overloaded"] },
+      "title": { "en": "503 No available provider / provider_overloaded", "id": "503 Tidak ada provider tersedia / provider_overloaded" },
+      "cause": {
+        "en": "No available model provider meets your routing requirements, or the upstream provider is temporarily overloaded.",
+        "id": "Tidak ada provider model yang memenuhi syarat routing-mu, atau provider upstream sedang penuh."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry after `Retry-After` or a short delay; loosen provider routing constraints if they are strict.",
+        "id": "Ulangi setelah `Retry-After` atau jeda singkat; longgarkan batasan routing provider kalau terlalu ketat."
+      },
+      "operator_fix": {
+        "en": "Review provider preferences (order, allow/deny lists, required features) that may exclude every provider.",
+        "id": "Tinjau preferensi provider (urutan, daftar izin/tolak, fitur wajib) yang mungkin menyingkirkan semua provider."
+      },
+      "docs": "https://openrouter.ai/docs/api_reference/errors-and-debugging",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "openrouter-500-server-masked",
+      "layer": "gateway",
+      "status": 500,
+      "match": { "type": ["server", "unmapped"] },
+      "title": { "en": "500 server / unmapped (masked upstream error)", "id": "500 server / unmapped (error upstream disamarkan)" },
+      "cause": {
+        "en": "An unexpected internal or upstream error. On 500s the message is replaced with a generic string and provider details are omitted. Errors after streaming starts arrive inside a 200 response.",
+        "id": "Error internal atau upstream yang tak terduga. Pada 500, pesannya diganti teks umum dan detail provider dihilangkan. Error setelah streaming dimulai datang di dalam respons 200."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry with backoff. Check the body for an `error` field even when the status is 200.",
+        "id": "Ulangi dengan backoff. Cek apakah body punya field `error` walaupun statusnya 200."
+      },
+      "operator_fix": {
+        "en": "Log the generation ID and switch on `error_type` rather than on the HTTP status alone.",
+        "id": "Catat ID generation dan bedakan berdasarkan `error_type`, bukan hanya status HTTP."
+      },
+      "docs": "https://openrouter.ai/docs/api_reference/errors-and-debugging",
+      "last_verified": "2026-11-12",
+      "verified": true
+    }
+  ]
+}

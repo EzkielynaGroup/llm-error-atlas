@@ -1,0 +1,76 @@
+{
+  "provider": "ollama",
+  "name": "Ollama",
+  "source": "https://docs.ollama.com/api/errors",
+  "entries": [
+    {
+      "id": "ollama-404-model-not-found",
+      "layer": "local",
+      "status": 404,
+      "match": {},
+      "title": { "en": "404 Not Found (model doesn't exist)", "id": "404 Not Found (model belum ada)" },
+      "cause": {
+        "en": "The model named in the request does not exist on this Ollama server.",
+        "id": "Model yang disebut di request tidak ada di server Ollama ini."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the model name with `ollama list` and pull it first with `ollama pull <model>`.",
+        "id": "Cek nama model dengan `ollama list` dan unduh dulu dengan `ollama pull <model>`."
+      },
+      "operator_fix": {
+        "en": "Pre-pull the models your app needs when provisioning the server.",
+        "id": "Unduh dulu model yang dibutuhkan aplikasi saat menyiapkan server."
+      },
+      "docs": "https://docs.ollama.com/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "ollama-502-cloud-model-unreachable",
+      "layer": "local",
+      "status": 502,
+      "match": {},
+      "title": { "en": "502 Bad Gateway (cloud model cannot be reached)", "id": "502 Bad Gateway (model cloud tidak terjangkau)" },
+      "cause": {
+        "en": "Ollama could not reach a cloud model.",
+        "id": "Ollama tidak bisa menjangkau model cloud."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Check the internet connection of the machine running Ollama, then retry.",
+        "id": "Cek koneksi internet mesin yang menjalankan Ollama, lalu ulangi."
+      },
+      "operator_fix": {
+        "en": "Check outbound network and sign-in for cloud models on the Ollama host.",
+        "id": "Cek jaringan keluar dan login model cloud di host Ollama."
+      },
+      "docs": "https://docs.ollama.com/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "ollama-model-run-error",
+      "layer": "local",
+      "status": null,
+      "match": { "message": ["an error was encountered while running the model", "the model failed to generate a response"] },
+      "title": { "en": "the model failed to generate a response / error while running the model", "id": "Model gagal menghasilkan respons" },
+      "cause": {
+        "en": "The model failed while generating. If it happens mid-stream, the error arrives as an NDJSON line with an `error` field and the HTTP status stays 200.",
+        "id": "Model gagal saat menghasilkan jawaban. Kalau terjadi di tengah streaming, error datang sebagai baris NDJSON dengan field `error` dan status HTTP tetap 200."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check each streamed line for an `error` field, then look at the Ollama server log before retrying.",
+        "id": "Cek setiap baris stream apakah ada field `error`, lalu lihat log server Ollama sebelum mengulang."
+      },
+      "operator_fix": {
+        "en": "Read the Ollama server log to find the cause before retrying the same request.",
+        "id": "Baca log server Ollama untuk mencari penyebabnya sebelum mengulang request yang sama."
+      },
+      "docs": "https://docs.ollama.com/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    }
+  ]
+}

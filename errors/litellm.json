@@ -1,0 +1,239 @@
+{
+  "provider": "litellm",
+  "name": "LiteLLM proxy",
+  "source": "https://docs.litellm.ai/docs/proxy/error_reference",
+  "entries": [
+    {
+      "id": "litellm-429-budget-exceeded",
+      "layer": "gateway",
+      "status": 429,
+      "match": { "type": ["budget_exceeded"], "message": ["budget has been exceeded"] },
+      "title": { "en": "429 budget_exceeded (Budget has been exceeded!)", "id": "429 budget_exceeded (budget habis)" },
+      "cause": {
+        "en": "A key, team, user or per-session spend cap on the proxy was reached. No provider was called.",
+        "id": "Batas belanja key, tim, pengguna, atau per sesi di proxy tercapai. Tidak ada provider yang dipanggil."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Ask the proxy admin to raise the budget, or wait for the budget window to reset.",
+        "id": "Minta admin proxy menaikkan budget, atau tunggu jendela budget reset."
+      },
+      "operator_fix": {
+        "en": "Raise `max_budget` on the key, team or user named in the message, or set a reset period.",
+        "id": "Naikkan `max_budget` pada key, tim, atau pengguna yang disebut di pesan, atau atur periode reset."
+      },
+      "docs": "https://docs.litellm.ai/docs/proxy/error_reference",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "litellm-429-throttling-error",
+      "layer": "gateway",
+      "status": 429,
+      "match": { "type": ["throttling_error"], "message": ["rate limit exceeded for api_key"] },
+      "title": { "en": "429 throttling_error", "id": "429 throttling_error (rate limit proxy atau provider)" },
+      "cause": {
+        "en": "An RPM, TPM or parallel-request ceiling was exceeded. With `retry-after`/`rate_limit_type` headers it is the proxy's own limit; without them, and with a `<Provider>Exception` in the message, it is the provider's.",
+        "id": "Batas RPM, TPM, atau request paralel terlampaui. Kalau ada header `retry-after`/`rate_limit_type`, itu batas proxy; kalau tidak ada dan pesan menyebut `<Provider>Exception`, itu batas provider."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Back off for `retry-after` seconds, then retry.",
+        "id": "Tunggu sesuai `retry-after` detik, lalu ulangi."
+      },
+      "operator_fix": {
+        "en": "Raise the key's rpm/tpm limits, or add deployments for the model group if the provider is throttling.",
+        "id": "Naikkan batas rpm/tpm key, atau tambah deployment ke model group kalau provider yang membatasi."
+      },
+      "docs": "https://docs.litellm.ai/docs/proxy/error_reference",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "litellm-401-token-not-found-in-db",
+      "layer": "gateway",
+      "status": 401,
+      "match": { "type": ["token_not_found_in_db"] },
+      "title": { "en": "401 token_not_found_in_db", "id": "401 token_not_found_in_db (virtual key tidak ada)" },
+      "cause": {
+        "en": "The virtual key sent to the proxy does not exist.",
+        "id": "Virtual key yang dikirim ke proxy tidak ada."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Use a key issued by this proxy (not the upstream provider's key).",
+        "id": "Pakai key yang diterbitkan proxy ini (bukan key provider upstream)."
+      },
+      "operator_fix": {
+        "en": "Issue a key with `/key/generate`.",
+        "id": "Terbitkan key dengan `/key/generate`."
+      },
+      "docs": "https://docs.litellm.ai/docs/proxy/error_reference",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "litellm-401-expired-key",
+      "layer": "gateway",
+      "status": 401,
+      "match": { "type": ["expired_key"] },
+      "title": { "en": "401 expired_key", "id": "401 expired_key (key kedaluwarsa)" },
+      "cause": {
+        "en": "The virtual key's `expires` time has passed.",
+        "id": "Waktu `expires` milik virtual key sudah lewat."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Ask the proxy admin for a new key.",
+        "id": "Minta key baru ke admin proxy."
+      },
+      "operator_fix": {
+        "en": "Issue a new key, or extend this one with `/key/update`.",
+        "id": "Terbitkan key baru, atau perpanjang key ini dengan `/key/update`."
+      },
+      "docs": "https://docs.litellm.ai/docs/proxy/error_reference",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "litellm-403-model-access-denied",
+      "layer": "gateway",
+      "status": 403,
+      "match": {
+        "type": ["key_model_access_denied", "team_model_access_denied", "user_model_access_denied", "org_model_access_denied", "project_model_access_denied"]
+      },
+      "title": { "en": "403 key_model_access_denied", "id": "403 key_model_access_denied (model tidak diizinkan untuk key)" },
+      "cause": {
+        "en": "The key, team, user, organization or project is not allowed to use the requested model.",
+        "id": "Key, tim, pengguna, organisasi, atau proyek tidak diizinkan memakai model yang diminta."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Call `/v1/models` to see which models your key may use, and pick one of those.",
+        "id": "Panggil `/v1/models` untuk melihat model yang boleh dipakai key-mu, lalu pilih salah satunya."
+      },
+      "operator_fix": {
+        "en": "Add the model to the `models` list of the object named in the error type.",
+        "id": "Tambahkan model ke daftar `models` pada objek yang disebut di tipe error."
+      },
+      "docs": "https://docs.litellm.ai/docs/proxy/error_reference",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "litellm-429-no-deployments-available",
+      "layer": "gateway",
+      "status": 429,
+      "match": { "message": ["no deployments available for selected model"] },
+      "title": { "en": "429 No deployments available for selected model", "id": "429 Tidak ada deployment tersedia untuk model ini" },
+      "cause": {
+        "en": "Every deployment in the model group is cooling down after repeated failures.",
+        "id": "Semua deployment di model group sedang cooldown setelah gagal berulang."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Wait for `retry-after` (the cooldown) and retry, or use another model.",
+        "id": "Tunggu sesuai `retry-after` (masa cooldown) lalu ulangi, atau pakai model lain."
+      },
+      "operator_fix": {
+        "en": "Read the cooling deployment IDs in the message and fix the failing upstream credentials or endpoints.",
+        "id": "Baca ID deployment yang cooldown di pesan dan perbaiki kredensial atau endpoint upstream yang gagal."
+      },
+      "docs": "https://docs.litellm.ai/docs/proxy/error_reference",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "litellm-400-no-healthy-deployments",
+      "layer": "gateway",
+      "status": 400,
+      "match": { "message": ["there are no healthy deployments for this model"] },
+      "title": { "en": "400 There are no healthy deployments for this model", "id": "400 Tidak ada deployment sehat untuk model ini" },
+      "cause": {
+        "en": "The model group has no deployment that can serve this request.",
+        "id": "Model group tidak punya deployment yang bisa melayani request ini."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Use another model name, or tell the proxy admin.",
+        "id": "Pakai nama model lain, atau beri tahu admin proxy."
+      },
+      "operator_fix": {
+        "en": "Check the model group's deployments in the proxy config and their health checks.",
+        "id": "Cek deployment model group di konfigurasi proxy dan health check-nya."
+      },
+      "docs": "https://docs.litellm.ai/docs/proxy/error_reference",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "litellm-404-route-not-found",
+      "layer": "gateway",
+      "status": 404,
+      "match": { "message": ["^not found$"] },
+      "title": { "en": "404 {\"detail\": \"Not Found\"} (wrong path or base URL)", "id": "404 {\"detail\": \"Not Found\"} (path atau base URL salah)" },
+      "cause": {
+        "en": "The route does not exist, so the web framework answered before the proxy saw the request. Usually a wrong path or base URL, not a proxy fault.",
+        "id": "Route tidak ada, jadi web framework menjawab sebelum proxy melihat request. Biasanya path atau base URL salah, bukan kerusakan proxy."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the base URL and path (for example a missing or doubled `/v1`).",
+        "id": "Cek base URL dan path (misalnya `/v1` hilang atau dobel)."
+      },
+      "operator_fix": {
+        "en": "Publish the exact base URL clients should use.",
+        "id": "Tulis base URL yang tepat untuk dipakai klien."
+      },
+      "docs": "https://docs.litellm.ai/docs/proxy/error_reference",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "litellm-500-connection-error",
+      "layer": "gateway",
+      "status": 500,
+      "match": { "message": ["internalservererror.*connection error"] },
+      "title": { "en": "500 InternalServerError ... Connection error.", "id": "500 InternalServerError ... Connection error. (provider tak terjangkau)" },
+      "cause": {
+        "en": "The proxy could not reach the provider: DNS failure, refused connection or a wrong `api_base`. It is reported as 500, not 502 or 503.",
+        "id": "Proxy tidak bisa menjangkau provider: DNS gagal, koneksi ditolak, atau `api_base` salah. Dilaporkan sebagai 500, bukan 502 atau 503."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry later; if it repeats, report it to the proxy admin.",
+        "id": "Ulangi nanti; kalau berulang, laporkan ke admin proxy."
+      },
+      "operator_fix": {
+        "en": "Check `api_base`, DNS and outbound network from the proxy host to the provider.",
+        "id": "Cek `api_base`, DNS, dan jaringan keluar dari host proxy ke provider."
+      },
+      "docs": "https://docs.litellm.ai/docs/proxy/error_reference",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "litellm-500-internal-server-error",
+      "layer": "gateway",
+      "status": 500,
+      "match": { "type": ["internal_server_error"] },
+      "title": { "en": "500 internal_server_error (proxy exception)", "id": "500 internal_server_error (exception di proxy)" },
+      "cause": {
+        "en": "An unhandled exception inside the proxy. The body is minimal on purpose so internal details do not leak.",
+        "id": "Exception yang tidak tertangani di dalam proxy. Body sengaja dibuat minimal supaya detail internal tidak bocor."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry once; if it repeats, report the time of the request to the proxy admin.",
+        "id": "Ulangi sekali; kalau berulang, laporkan waktu request ke admin proxy."
+      },
+      "operator_fix": {
+        "en": "Find the matching `x-litellm-call-id` in the proxy logs.",
+        "id": "Cari `x-litellm-call-id` yang sesuai di log proxy."
+      },
+      "docs": "https://docs.litellm.ai/docs/proxy/error_reference",
+      "last_verified": "2026-11-12",
+      "verified": true
+    }
+  ]
+}

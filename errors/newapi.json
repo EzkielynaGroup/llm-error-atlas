@@ -1,0 +1,122 @@
+{
+  "provider": "newapi",
+  "name": "New API (one-api family relay)",
+  "source": "https://docs.newapi.pro/en/docs/support/faq",
+  "entries": [
+    {
+      "id": "newapi-no-available-channels",
+      "layer": "relay",
+      "status": null,
+      "match": { "message": ["no available channel"] },
+      "title": { "en": "No available channels", "id": "No available channels (tidak ada channel tersedia)" },
+      "cause": {
+        "en": "The relay has no channel that serves this model for your group: the user group, the channel group or the channel's model list do not line up.",
+        "id": "Relay tidak punya channel yang melayani model ini untuk grupmu: grup pengguna, grup channel, atau daftar model channel tidak cocok."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the exact model name, and use a key or group that includes this model. Otherwise contact the relay admin.",
+        "id": "Cek nama model persisnya, dan pakai key atau grup yang mencakup model ini. Kalau tidak, hubungi admin relay."
+      },
+      "operator_fix": {
+        "en": "Check user group settings, channel group settings and channel model settings so the model is served for that group.",
+        "id": "Cek pengaturan grup pengguna, grup channel, dan model channel supaya model dilayani untuk grup tersebut."
+      },
+      "docs": "https://docs.newapi.pro/en/docs/support/faq",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "newapi-invalid-character-html",
+      "layer": "relay",
+      "status": null,
+      "match": { "message": ["invalid character '<' looking for beginning of value"] },
+      "title": { "en": "invalid character '<' looking for beginning of value", "id": "invalid character '<' looking for beginning of value (upstream membalas HTML)" },
+      "cause": {
+        "en": "The upstream returned an HTML page instead of JSON. The relay docs name a blocked server IP or proxy node (for example blocked by Cloudflare) as the most likely reason.",
+        "id": "Upstream membalas halaman HTML, bukan JSON. Dokumentasi relay menyebut IP server atau node proxy yang diblokir (misalnya oleh Cloudflare) sebagai penyebab paling mungkin."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Report it to the relay admin; it is not caused by your request.",
+        "id": "Laporkan ke admin relay; ini bukan karena request-mu."
+      },
+      "operator_fix": {
+        "en": "Open the channel's base URL from the server and see which HTML page comes back; fix the base URL or the blocked egress IP.",
+        "id": "Buka base URL channel dari server dan lihat halaman HTML apa yang kembali; perbaiki base URL atau IP keluar yang diblokir."
+      },
+      "docs": "https://docs.newapi.pro/en/docs/support/faq",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "newapi-ratio-not-configured",
+      "layer": "relay",
+      "status": null,
+      "match": { "message": ["ratio or price not configured"] },
+      "title": { "en": "Ratio or price not configured", "id": "Ratio or price not configured (harga model belum diatur)" },
+      "cause": {
+        "en": "The relay runs in billing mode and the model has no ratio or price set.",
+        "id": "Relay berjalan dalam mode berbayar dan model belum punya ratio atau harga."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Ask the relay admin to set a price for the model, or use another model.",
+        "id": "Minta admin relay mengatur harga model, atau pakai model lain."
+      },
+      "operator_fix": {
+        "en": "Set the model ratio or price in the operation settings, or enable self-use mode for a private deployment.",
+        "id": "Atur ratio atau harga model di pengaturan operasional, atau aktifkan mode pemakaian sendiri untuk deployment pribadi."
+      },
+      "docs": "https://docs.newapi.pro/en/docs/support/faq",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "newapi-group-load-saturated",
+      "layer": "relay",
+      "status": null,
+      "match": { "message": ["current group load is saturated"] },
+      "title": { "en": "Current group load is saturated, please try again later", "id": "Current group load is saturated (beban grup penuh)" },
+      "cause": {
+        "en": "An upstream channel answered 429 Too Many Requests.",
+        "id": "Channel upstream menjawab 429 Too Many Requests."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry later with backoff, or try another model.",
+        "id": "Ulangi nanti dengan backoff, atau coba model lain."
+      },
+      "operator_fix": {
+        "en": "Add capacity or more channels to the group, and lower per-channel concurrency.",
+        "id": "Tambah kapasitas atau channel ke grup, dan turunkan paralel per channel."
+      },
+      "docs": "https://docs.newapi.pro/en/docs/support/faq",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "newapi-insufficient-quota",
+      "layer": "relay",
+      "status": null,
+      "match": { "message": ["insufficient quota"] },
+      "title": { "en": "Insufficient quota (although the account has quota)", "id": "Insufficient quota (padahal saldo akun masih ada)" },
+      "cause": {
+        "en": "Token (API key) quota and account quota are separate. The key's own quota limit can run out while the account still has balance.",
+        "id": "Kuota token (API key) dan kuota akun itu terpisah. Batas kuota key bisa habis walaupun akun masih punya saldo."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Raise the quota of the key (or set it to no limit) in the API keys page, or top up the account if it is empty.",
+        "id": "Naikkan kuota key (atau hapus batasnya) di halaman API key, atau isi saldo akun kalau memang kosong."
+      },
+      "operator_fix": {
+        "en": "Explain in your UI that key quota is a cap set by the user, separate from the wallet balance.",
+        "id": "Jelaskan di UI bahwa kuota key adalah batas yang diatur pengguna, terpisah dari saldo dompet."
+      },
+      "docs": "https://docs.newapi.pro/en/docs/support/faq",
+      "last_verified": "2026-11-12",
+      "verified": true
+    }
+  ]
+}

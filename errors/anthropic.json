@@ -1,0 +1,260 @@
+{
+  "provider": "anthropic",
+  "name": "Anthropic",
+  "source": "https://platform.claude.com/docs/en/api/errors",
+  "entries": [
+    {
+      "id": "anthropic-400-invalid-request-error",
+      "layer": "provider",
+      "status": 400,
+      "match": { "type": ["invalid_request_error"] },
+      "title": { "en": "400 invalid_request_error", "id": "400 invalid_request_error (request tidak valid)" },
+      "cause": {
+        "en": "The format or content of the request is wrong. The API also answers 400 when usage reaches an organization or workspace spend limit that you set.",
+        "id": "Format atau isi request salah. API juga menjawab 400 kalau pemakaian mencapai batas belanja organisasi atau workspace yang kamu atur."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Read `error.message`, fix the field it names, and send again. If the message mentions a spend limit, raise that limit first.",
+        "id": "Baca `error.message`, perbaiki field yang disebut, lalu kirim lagi. Kalau pesannya menyebut batas belanja, naikkan batas itu dulu."
+      },
+      "operator_fix": {
+        "en": "Validate request bodies before sending and log the request ID for support.",
+        "id": "Validasi body request sebelum dikirim dan catat request ID untuk dukungan."
+      },
+      "docs": "https://platform.claude.com/docs/en/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "anthropic-401-authentication-error",
+      "layer": "provider",
+      "status": 401,
+      "match": { "type": ["authentication_error"] },
+      "title": { "en": "401 authentication_error", "id": "401 authentication_error (key ditolak)" },
+      "cause": {
+        "en": "The API key is malformed, revoked or expired.",
+        "id": "API key salah format, sudah dicabut, atau kedaluwarsa."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Copy the key again and send it in the `x-api-key` header, or create a new key in the console.",
+        "id": "Salin ulang key dan kirim di header `x-api-key`, atau buat key baru di console."
+      },
+      "operator_fix": {
+        "en": "Rotate the key in your secret store and check key expiration settings.",
+        "id": "Ganti key di penyimpanan rahasia dan cek pengaturan masa berlaku key."
+      },
+      "docs": "https://platform.claude.com/docs/en/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "anthropic-401-cors-not-allowed",
+      "layer": "provider",
+      "status": 401,
+      "match": { "message": ["cors requests are not allowed for this organization"] },
+      "title": { "en": "401 CORS requests are not allowed for this Organization", "id": "401 Request CORS tidak diizinkan untuk organisasi ini" },
+      "cause": {
+        "en": "The request came from a browser (it had an `Origin` header) and the organization may not call the API directly from browsers. The key itself is fine.",
+        "id": "Request datang dari browser (ada header `Origin`) dan organisasi tidak boleh memanggil API langsung dari browser. Key-nya sendiri tidak bermasalah."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Send the request from your own back end instead of the browser. Changing the browser request does not fix it.",
+        "id": "Kirim request dari back end milikmu, bukan dari browser. Mengubah request di browser tidak menyelesaikannya."
+      },
+      "operator_fix": {
+        "en": "Add a small server-side proxy that holds the key; never ship the key to browsers.",
+        "id": "Buat proxy kecil di server yang menyimpan key; jangan pernah kirim key ke browser."
+      },
+      "docs": "https://platform.claude.com/docs/en/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "anthropic-402-billing-error",
+      "layer": "provider",
+      "status": 402,
+      "match": { "type": ["billing_error"] },
+      "title": { "en": "402 billing_error", "id": "402 billing_error (masalah tagihan)" },
+      "cause": {
+        "en": "There is a problem with billing or payment details.",
+        "id": "Ada masalah pada tagihan atau data pembayaran."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check payment details in the console (or in AWS Marketplace if you use the platform through AWS).",
+        "id": "Cek data pembayaran di console (atau di AWS Marketplace kalau memakai platform lewat AWS)."
+      },
+      "operator_fix": {
+        "en": "Fix the payment method or invoice, then resume traffic; do not retry automatically.",
+        "id": "Perbaiki metode pembayaran atau tagihan, lalu jalankan lagi trafik; jangan retry otomatis."
+      },
+      "docs": "https://platform.claude.com/docs/en/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "anthropic-403-permission-error",
+      "layer": "provider",
+      "status": 403,
+      "match": { "type": ["permission_error"] },
+      "title": { "en": "403 permission_error", "id": "403 permission_error (tidak punya izin)" },
+      "cause": {
+        "en": "The API key has no permission for the requested resource.",
+        "id": "API key tidak punya izin untuk resource yang diminta."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Use a key from the workspace that has access, or ask an admin to grant it.",
+        "id": "Pakai key dari workspace yang punya akses, atau minta admin memberi izin."
+      },
+      "operator_fix": {
+        "en": "Check organization access and workspace settings in the console.",
+        "id": "Cek akses organisasi dan pengaturan workspace di console."
+      },
+      "docs": "https://platform.claude.com/docs/en/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "anthropic-404-not-found-error",
+      "layer": "provider",
+      "status": 404,
+      "match": { "type": ["not_found_error"], "message": ["the requested resource could not be found"] },
+      "title": { "en": "404 not_found_error", "id": "404 not_found_error (tidak ditemukan)" },
+      "cause": {
+        "en": "The endpoint path or a resource ID in the URL does not exist.",
+        "id": "Path endpoint atau ID resource di URL tidak ada."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Check the endpoint path and any IDs in the URL. With a custom base URL, check whether your client adds `/v1` itself.",
+        "id": "Cek path endpoint dan ID di URL. Dengan base URL kustom, cek apakah klienmu sudah menambahkan `/v1` sendiri."
+      },
+      "operator_fix": {
+        "en": "Log the full request path to spot duplicated or missing path segments.",
+        "id": "Catat path request lengkap untuk menemukan segmen path yang dobel atau hilang."
+      },
+      "docs": "https://platform.claude.com/docs/en/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "anthropic-413-request-too-large",
+      "layer": "provider",
+      "status": 413,
+      "match": { "type": ["request_too_large"] },
+      "title": { "en": "413 request_too_large", "id": "413 request_too_large (request terlalu besar)" },
+      "cause": {
+        "en": "The request is bigger than the endpoint allows (for example 128 MB for the Messages API). On the first-party API it is rejected before reaching the API servers.",
+        "id": "Request lebih besar dari batas endpoint (misalnya 128 MB untuk Messages API). Di API langsung, request ditolak sebelum sampai ke server API."
+      },
+      "retryable": false,
+      "user_fix": {
+        "en": "Shrink the payload: fewer or smaller images and files, or upload large files through the Files API.",
+        "id": "Perkecil payload: kurangi atau perkecil gambar dan file, atau unggah file besar lewat Files API."
+      },
+      "operator_fix": {
+        "en": "Check payload size client-side before sending and show a clear message to users.",
+        "id": "Cek ukuran payload di sisi klien sebelum dikirim dan tampilkan pesan yang jelas ke pengguna."
+      },
+      "docs": "https://platform.claude.com/docs/en/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "anthropic-429-rate-limit-error",
+      "layer": "provider",
+      "status": 429,
+      "match": { "type": ["rate_limit_error"] },
+      "title": { "en": "429 rate_limit_error", "id": "429 rate_limit_error (rate limit)" },
+      "cause": {
+        "en": "The organization hit a rate limit, a sharp traffic increase hit acceleration limits, or a spend cap was reached. A spend-cap 429 has no `retry-after` header.",
+        "id": "Organisasi kena rate limit, lonjakan trafik mendadak kena batas akselerasi, atau batas belanja tercapai. 429 karena batas belanja tidak punya header `retry-after`."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Honour `retry-after` and back off. If there is no `retry-after` and it keeps failing, check whether a spend cap was reached.",
+        "id": "Ikuti `retry-after` dan beri jeda. Kalau tidak ada `retry-after` dan terus gagal, cek apakah batas belanja tercapai."
+      },
+      "operator_fix": {
+        "en": "Increase traffic gradually and keep usage steady to avoid acceleration limits; review tier limits.",
+        "id": "Naikkan trafik bertahap dan jaga pemakaian stabil untuk menghindari batas akselerasi; tinjau batas tier."
+      },
+      "docs": "https://platform.claude.com/docs/en/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "anthropic-500-api-error",
+      "layer": "provider",
+      "status": 500,
+      "match": { "type": ["api_error"] },
+      "title": { "en": "500 api_error", "id": "500 api_error (error internal)" },
+      "cause": {
+        "en": "An unexpected error inside the provider's systems.",
+        "id": "Error tak terduga di dalam sistem penyedia."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry with exponential backoff. If it persists, contact support with the request ID.",
+        "id": "Ulangi dengan exponential backoff. Kalau terus terjadi, hubungi dukungan dengan request ID."
+      },
+      "operator_fix": {
+        "en": "Log `request_id` from the error body; SDKs retry 5xx twice by default.",
+        "id": "Catat `request_id` dari body error; SDK otomatis retry 5xx dua kali secara default."
+      },
+      "docs": "https://platform.claude.com/docs/en/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "anthropic-504-timeout-error",
+      "layer": "provider",
+      "status": 504,
+      "match": { "type": ["timeout_error"] },
+      "title": { "en": "504 timeout_error", "id": "504 timeout_error (waktu habis)" },
+      "cause": {
+        "en": "The request timed out while processing. The same type can also come with other statuses, such as 500 when the server time limit is reached before the response starts.",
+        "id": "Request kehabisan waktu saat diproses. Tipe yang sama bisa muncul dengan status lain, misalnya 500 kalau batas waktu server tercapai sebelum respons dimulai."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Use streaming for long Messages API requests, or reduce the work per request, then retry.",
+        "id": "Pakai streaming untuk request Messages API yang panjang, atau kurangi beban per request, lalu ulangi."
+      },
+      "operator_fix": {
+        "en": "Switch long generations to streaming or batch processing and raise client timeouts.",
+        "id": "Pindahkan generasi panjang ke streaming atau batch dan naikkan timeout klien."
+      },
+      "docs": "https://platform.claude.com/docs/en/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    },
+    {
+      "id": "anthropic-529-overloaded-error",
+      "layer": "provider",
+      "status": 529,
+      "match": { "type": ["overloaded_error"] },
+      "title": { "en": "529 overloaded_error", "id": "529 overloaded_error (API sedang penuh)" },
+      "cause": {
+        "en": "The API is temporarily overloaded by high traffic across all users. It is not caused by your key or request.",
+        "id": "API sedang penuh karena trafik tinggi dari semua pengguna. Bukan karena key atau request-mu."
+      },
+      "retryable": true,
+      "user_fix": {
+        "en": "Retry with exponential backoff and jitter. When streaming, errors can also arrive as an SSE event after a 200 response.",
+        "id": "Ulangi dengan exponential backoff dan jitter. Saat streaming, error juga bisa datang sebagai event SSE setelah status 200."
+      },
+      "operator_fix": {
+        "en": "Treat 529 like 503: retry with a cap, and consider a fallback model for user-facing paths.",
+        "id": "Perlakukan 529 seperti 503: retry dengan batas, dan pertimbangkan model cadangan untuk jalur yang langsung dipakai pengguna."
+      },
+      "docs": "https://platform.claude.com/docs/en/api/errors",
+      "last_verified": "2026-11-12",
+      "verified": true
+    }
+  ]
+}
